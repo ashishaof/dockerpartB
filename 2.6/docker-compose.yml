@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+    redis:
+        image: redis
+    database:
+        image: postgres
+        environment:
+      - REDIS=redis
+      - REDIS_PORT=6379
+      - DB_USERNAME=userone
+      - DB_PASSWORD=pwd1
+      - DB_HOST=db
+           
+    backend:
+        image: backend
+        ports:
+            - 8000:8000
+            - DB_HOST=database
+        restart: unless-stopped
+    frontend:
+        image: frontend
+        ports:
+            - 5000:5000
